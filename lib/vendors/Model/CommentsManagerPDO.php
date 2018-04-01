@@ -78,4 +78,59 @@ class CommentsManagerPDO extends CommentsManager
     
     return $q->fetch();
   }
+
+  public function signaler($id)
+  {
+    $q = $this->dao->prepare('UPDATE comments SET moderation = :moderation WHERE id = :id');
+
+    $moderation ='OUI';
+    
+    
+    $q->bindValue(':moderation', $moderation);
+    $q->bindValue(':id', $id, \PDO::PARAM_INT);
+    
+    $q->execute();
+  }
+
+  public function getListOfCommentsSignales()
+  {
+    
+
+    $moderation='OUI'; // Commentaire  signalé
+    
+    $q = $this->dao->prepare('SELECT id, news, auteur, contenu, moderation, date FROM comments WHERE moderation = :moderation');
+    
+    $q->bindValue(':moderation', $moderation);
+    $q->execute();
+    
+    $q->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Entity\Comment');
+    
+    $comments = $q->fetchAll();
+    
+    foreach ($comments as $comment)
+    {
+      $comment->setDate(new \DateTime($comment->date()));
+    }
+    
+    return $comments;
+  }
+
+  public function countSignales()
+  {
+    return $this->dao->query("SELECT COUNT(*) FROM comments WHERE moderation ='OUI' ")->fetchColumn();
+  }
+
+  public function moderationDeOuiANon($id)
+  {
+   
+    $moderation='NON';
+
+    $q = $this->dao->prepare('UPDATE comments SET moderation = :moderation WHERE id = :id');
+    
+    $q->bindValue(':moderation', $moderation);
+    
+    $q->bindValue(':id', $id, \PDO::PARAM_INT);
+    
+    $q->execute();
+  }
 }
