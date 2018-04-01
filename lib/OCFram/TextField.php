@@ -6,7 +6,7 @@ class TextField extends Field
   protected $cols;
   protected $rows;
   
-  public function buildWidget()
+  public function buildWidget() 
   {
     $widget = '';
     
@@ -16,6 +16,10 @@ class TextField extends Field
     }
     
     $widget .= '<label>'.$this->label.'</label><textarea name="'.$this->name.'"';
+
+    //Ajout de la classe
+
+    $widget .=' class="'.$this->class.'"';
     
     if (!empty($this->cols))
     {
