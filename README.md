@@ -27,4 +27,8 @@ Modifications du 01 avril 2018 à 20h38
 
 Ajout de TinyMCE
 
+Modifications du 01 avril 2018 à 22h18
+
+Design / Partie visible
+
 
