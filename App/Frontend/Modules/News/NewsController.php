@@ -54,7 +54,7 @@ class NewsController extends BackController
   public function executeInsertComment(HTTPRequest $request)
   {
     // Si le formulaire a été envoyé.
-    if ($request->method() == 'POST')
+    if ($request->method() == 'POST') 
     {
       $comment = new Comment([
         'news' => $request->getData('news'),
@@ -84,5 +84,14 @@ class NewsController extends BackController
     $this->page->addVar('comment', $comment);
     $this->page->addVar('form', $form->createView());
     $this->page->addVar('title', 'Ajout d\'un commentaire');
+  }
+
+  public function executeSignalerComment(HTTPRequest $request)
+  {
+    $this->managers->getManagerOf('Comments')->signaler($request->getData('comment')); // signaler commentaire
+
+    $comment = $this->managers->getManagerOf('Comments')->get($request->getData('comment')); // Objet commentaire
+
+    $this->app->httpResponse()->redirect('news-'.$comment->news().'.html');
   }
 }
