@@ -1,7 +1,7 @@
 <?php
 namespace OCFram;
 
-abstract class Field
+abstract class Field 
 {
   use Hydrator;
 
@@ -10,6 +10,7 @@ abstract class Field
   protected $name;
   protected $validators = [];
   protected $value;
+  protected $class; // Ajout de la classe
   
   public function __construct(array $options = [])
   {
@@ -49,6 +50,13 @@ abstract class Field
   {
     return $this->name;
   }
+
+  // Ajout de la classe
+
+  public function class()
+  {
+    return $this->class;
+  }
   
   public function validators()
   {
@@ -83,6 +91,16 @@ abstract class Field
     if (is_string($name))
     {
       $this->name = $name;
+    }
+  }
+
+  // Ajout de la classe
+
+  public function setClass($class)
+  {
+    if (is_string($class))
+    {
+      $this->class = $class; 
     }
   }
   
