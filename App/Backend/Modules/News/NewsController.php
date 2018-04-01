@@ -25,21 +25,35 @@ class NewsController extends BackController
 
   public function executeDeleteComment(HTTPRequest $request)
   {
-    $this->managers->getManagerOf('Comments')->delete($request->getData('id'));
+    $this->managers->getManagerOf('Comments')->delete($request->getData('id')); 
     
     $this->app->user()->setFlash('Le commentaire a bien été supprimé !');
     
     $this->app->httpResponse()->redirect('.');
   }
 
+  public function executeMaintenirComment(HTTPRequest $request)
+  {
+    $this->managers->getManagerOf('Comments')->moderationDeOuiANon($request->getData('id')); 
+    
+    $this->app->user()->setFlash('Le commentaire a bien été maintenu !');
+    
+    $this->app->httpResponse()->redirect('.');
+  }
+
   public function executeIndex(HTTPRequest $request)
   {
-    $this->page->addVar('title', 'Gestion des news');
+    $this->page->addVar('title', 'Gestion des news'); 
 
-    $manager = $this->managers->getManagerOf('News');
+    $manager_news = $this->managers->getManagerOf('News');
 
-    $this->page->addVar('listeNews', $manager->getList());
-    $this->page->addVar('nombreNews', $manager->count());
+    $manager_comment = $this->managers->getManagerOf('Comments');
+
+    $this->page->addVar('listeNews', $manager_news->getList());
+    $this->page->addVar('nombreNews', $manager_news->count());
+
+    $this->page->addVar('listeCommentsSignales', $manager_comment->getListOfCommentsSignales());
+    $this->page->addVar('nombreCommentsSignales', $manager_comment->countSignales()); 
   }
 
   public function executeInsert(HTTPRequest $request)
@@ -69,7 +83,7 @@ class NewsController extends BackController
       ]);
     }
     else
-    {
+    { 
       $comment = $this->managers->getManagerOf('Comments')->get($request->getData('id'));
     }
 
