@@ -3,7 +3,7 @@ namespace App\Backend;
 
 use \OCFram\Application;
 
-class BackendApplication extends Application
+class BackendApplication extends Application 
 {
   public function __construct()
   {
@@ -16,16 +16,37 @@ class BackendApplication extends Application
   {
     if ($this->user->isAuthenticated())
     {
-      $controller = $this->getController();
+      
+
+      if($_SERVER['REQUEST_URI']=='/admin/deconnexion')
+      {
+        session_destroy();
+
+        header('Location: '.'.'); 
+        // exit;
+      }
+      else
+      {
+        $controller = $this->getController();
+      }
     }
     else
     {
       $controller = new Modules\Connexion\ConnexionController($this, 'Connexion', 'index');
     }
 
-    $controller->execute();
+    if($_SERVER['REQUEST_URI']=='/admin/deconnexion')
+    {
 
-    $this->httpResponse->setPage($controller->page());
-    $this->httpResponse->send();
+    }
+    else
+    {
+      $controller->execute();
+
+      $this->httpResponse->setPage($controller->page());
+      $this->httpResponse->send();
+    }
+
+    
   }
 }
