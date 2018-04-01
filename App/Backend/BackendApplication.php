@@ -17,36 +17,21 @@ class BackendApplication extends Application
     if ($this->user->isAuthenticated())
     {
       
-
-      if($_SERVER['REQUEST_URI']=='/admin/deconnexion')
-      {
-        session_destroy();
-
-        header('Location: '.'.'); 
-        // exit;
-      }
-      else
-      {
         $controller = $this->getController();
-      }
+      
     }
     else
     {
       $controller = new Modules\Connexion\ConnexionController($this, 'Connexion', 'index');
     }
 
-    if($_SERVER['REQUEST_URI']=='/admin/deconnexion')
-    {
+    
+    
+    $controller->execute();
 
-    }
-    else
-    {
-      $controller->execute();
-
-      $this->httpResponse->setPage($controller->page());
-      $this->httpResponse->send();
-    }
-
+    $this->httpResponse->setPage($controller->page());
+    $this->httpResponse->send();
+    
     
   }
 }
