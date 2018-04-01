@@ -5,7 +5,7 @@
 	{
 
 		?>
-			<p style="text-align: center">Aucune news</p>
+			<p style="text-align: center">Aucun épisode</p>
 
 		<?php
 
@@ -15,7 +15,7 @@
 		?>
 
 
-			<p style="text-align: center">Il y a actuellement <?= $nombreNews ?> news. En voici la liste :</p>
+			<p style="text-align: center">Il y a actuellement <?= $nombreNews ?> épisodes. En voici la liste :</p>
 
 <table>
   <tr><th>Auteur</th><th>Titre</th><th>Date d'ajout</th><th>Dernière modification</th><th>Action</th></tr>
