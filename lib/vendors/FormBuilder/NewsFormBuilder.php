@@ -11,7 +11,7 @@ class NewsFormBuilder extends FormBuilder
 {
   public function build()
   {
-    $this->form->add(new StringField([
+    $this->form->add(new StringField([ 
         'label' => 'Auteur',
         'name' => 'auteur',
         'maxLength' => 20,
@@ -29,9 +29,10 @@ class NewsFormBuilder extends FormBuilder
           new NotNullValidator('Merci de spécifier le titre de la news'),
         ],
        ]))
-       ->add(new TextField([
+       ->add(new TextField([ 
         'label' => 'Contenu',
         'name' => 'contenu',
+        'class'=> 'news', // J'utilise tiny mce uniquement pour les news
         'rows' => 8,
         'cols' => 60,
         'validators' => [
