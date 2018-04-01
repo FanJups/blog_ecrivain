@@ -18,7 +18,7 @@ class NewsController extends BackController
     $this->managers->getManagerOf('News')->delete($newsId);
     $this->managers->getManagerOf('Comments')->deleteFromNews($newsId);
 
-    $this->app->user()->setFlash('La news a bien été supprimée !');
+    $this->app->user()->setFlash("L'épisode  a bien été supprimé !");
 
     $this->app->httpResponse()->redirect('.');
   }
@@ -43,7 +43,7 @@ class NewsController extends BackController
 
   public function executeIndex(HTTPRequest $request)
   {
-    $this->page->addVar('title', 'Gestion des news'); 
+    $this->page->addVar('title', 'Gestion des épisodes'); 
 
     $manager_news = $this->managers->getManagerOf('News');
 
@@ -60,14 +60,14 @@ class NewsController extends BackController
   {
     $this->processForm($request);
 
-    $this->page->addVar('title', 'Ajout d\'une news');
+    $this->page->addVar('title', 'Ajout d\'un épisode');
   }
 
   public function executeUpdate(HTTPRequest $request)
   {
     $this->processForm($request);
 
-    $this->page->addVar('title', 'Modification d\'une news');
+    $this->page->addVar('title', 'Modification d\'un épisode');
   }
 
   public function executeUpdateComment(HTTPRequest $request)
@@ -116,7 +116,7 @@ class NewsController extends BackController
 
       if ($request->getExists('id'))
       {
-        $news->setId($request->getData('id'));
+        $news->setId($request->getData('id')); 
       }
     }
     else
@@ -141,7 +141,7 @@ class NewsController extends BackController
 
     if ($formHandler->process())
     {
-      $this->app->user()->setFlash($news->isNew() ? 'La news a bien été ajoutée !' : 'La news a bien été modifiée !');
+      $this->app->user()->setFlash($news->isNew() ? 'L\'épisode a bien été ajouté !' : 'L\'épisode a bien été modifié !');
       
       $this->app->httpResponse()->redirect('/admin/');
     }
